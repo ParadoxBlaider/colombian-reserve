@@ -1,0 +1,25 @@
+.container-login{
+}
+
+.container-login__bg{
+  @apply bg-cover bg-center w-[calc(100%)] h-screen
+}
+
+.container-login__form{
+  @apply w-full flex items-center text-center justify-center
+}
+.container-login__form__logo{
+  @apply w-[100px] h-[100px] mx-auto mb-8
+}
+.container-login__form .ant-form-item-label label{
+  @apply font-bold
+}
+.container-login__form .ant-form-item-label label::before{
+  @apply !content-none;
+}
+.general-action-btn{
+  @apply !bg-violet-600 w-full h-[40px] rounded-xl
+}
+.general-action-btn:hover{
+  @apply !bg-violet-400
+}

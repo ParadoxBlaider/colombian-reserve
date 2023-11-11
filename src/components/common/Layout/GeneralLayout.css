@@ -1,0 +1,6 @@
+.demo-logo-vertical{
+  @apply w-[60px] h-[60px] rounded-full bg-white p-4 mx-auto my-8
+}
+.ant-menu-dark .ant-menu-item-selected{
+  @apply bg-smart-talent
+}

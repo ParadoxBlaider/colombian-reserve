@@ -1,0 +1,12 @@
+.modal-hotel{
+  @apply max-w-[400px]
+}
+.modal-hotel__main_action{
+  @apply !bg-smart-talent
+}
+.modal-hotel__form label{
+  @apply font-medium
+}
+.modal-hotel__form label::before{
+  @apply !content-none
+}
