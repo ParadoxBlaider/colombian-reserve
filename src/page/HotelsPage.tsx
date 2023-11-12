@@ -126,8 +126,7 @@ const HotelsPage: React.FC<HotelsPageProps> = ({ userLogued }) => {
       navigate('/auth/login');
       return
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    getDataHotels()
+    getDataHotels(); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate, userLogued]);
 
   // Render the component content based on the user's login status

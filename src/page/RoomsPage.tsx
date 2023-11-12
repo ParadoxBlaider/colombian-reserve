@@ -137,8 +137,7 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ userLogued }) => {
       navigate('/auth/login');
       return
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    getDataRooms()
+    getDataRooms(); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate, userLogued]);
 
 
