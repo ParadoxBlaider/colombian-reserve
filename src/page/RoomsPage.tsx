@@ -14,7 +14,8 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ userLogued }) => {
     if (!userLogued) {
       navigate('/auth/login');
     }
-  }, []);
+  }, [navigate, userLogued]);
+
 
   // Render the component content based on the user's login status
   return userLogued ? (

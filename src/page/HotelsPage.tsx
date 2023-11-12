@@ -78,7 +78,7 @@ const HotelsPage: React.FC<HotelsPageProps> = ({ userLogued }) => {
     }
     getDataHotels()
 
-  }, []);
+  }, [navigate, userLogued]);
 
   // Render the component content based on the user's login status
   return userLogued ? (
