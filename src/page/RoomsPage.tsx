@@ -1,6 +1,5 @@
 import { message } from 'antd';
 import { NoticeType } from 'antd/es/message/interface';
-import { AxiosError } from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import GeneralLayout from '../components/common/Layout/GeneralLayout';
@@ -140,7 +139,7 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ userLogued }) => {
     }
     getDataRooms()
 
-  }, [navigate, userLogued]);
+  }, [navigate, userLogued, getDataRooms]);
 
 
   // Render the component content based on the user's login status

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Button, Form, Input, InputNumber, Modal, Select, Space, Table, Tag } from 'antd';
+import { Button, Form, Input, InputNumber, Modal, Select, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import '../../styles/hotel/index.css'
 import { DataType, Rooms } from '../../services/hotel/types';
@@ -10,7 +10,6 @@ import {
   CloseOutlined,
 } from '@ant-design/icons';
 import ConfirmationModal from '../common/ConfirmationModal';
-import { detailsHotel } from '../../services/hotel/api';
 import { formatterMoney } from '../../utils';
 
 
