@@ -1,7 +1,7 @@
 // src/api.js
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:4000/api';
+const BASE_URL = 'https://colombian-reserve-server.azurewebsites.net/api';
 
 export const getHotels = async () => {
   try {
