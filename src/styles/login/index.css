@@ -1,6 +1,3 @@
-.container-login{
-}
-
 .container-login__bg{
   @apply bg-cover bg-center w-[calc(100%)] h-screen
 }

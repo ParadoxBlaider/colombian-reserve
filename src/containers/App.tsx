@@ -1,9 +1,6 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import BookingsPage from '../page/BookingsPage';
 import HotelsPage from '../page/HotelsPage';
-import DashboardPage from '../page/HotelsPage';
 import LoginPage from '../page/LoginPage';
 import NotFoundPage from '../page/NotFoundPage';
 import RoomsPage from '../page/RoomsPage';

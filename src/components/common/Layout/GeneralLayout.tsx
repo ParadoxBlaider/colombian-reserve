@@ -19,11 +19,6 @@ interface GeneralLayoutProps {
   children: ReactNode;
 }
 
-interface MenuClickEvent {
-  key: string;
-  keyPath: string[];
-  domEvent: React.MouseEvent<HTMLElement>;
-}
 
 interface MenuItem {
   key: string;
