@@ -1,7 +1,7 @@
 // src/api.js
 import axios from 'axios';
 
-const BASE_URL = process.env.BASE_URL_API;
+const BASE_URL = "https://colombian-reserve-server.azurewebsites.net/api";
 
 export const login = async (credentials) => {
   try {

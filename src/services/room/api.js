@@ -1,7 +1,7 @@
 // src/api.js
 import axios from 'axios';
 
-const BASE_URL = process.env.REACT_APP_BASE_URL_API;
+const BASE_URL = "https://colombian-reserve-server.azurewebsites.net/api";
 
 export const createRoom = async (hote_id, data) => {
   try {
