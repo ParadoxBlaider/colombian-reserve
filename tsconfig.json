@@ -22,5 +22,16 @@
   },
   "include": [
     "src"
-  ]
+  ],
+  "eslint": {
+    "enable": true,
+    "options": {
+      "ignore": ["**/*.js", "**/*.jsx"],
+      "overrideConfig": {
+        "rules": {
+          "@typescript-eslint/no-unused-vars": "off"
+        }
+      }
+    }
+  }
 }
