@@ -126,6 +126,8 @@ const HotelsPage: React.FC<HotelsPageProps> = ({ userLogued }) => {
       navigate('/auth/login');
       return
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     getDataHotels()
 
   }, [navigate, userLogued]);

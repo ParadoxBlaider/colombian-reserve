@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import { NoticeType } from 'antd/es/message/interface';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import GeneralLayout from '../components/common/Layout/GeneralLayout';
 import RoomsTable from '../components/rooms/RoomsTable';
@@ -137,6 +137,7 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ userLogued }) => {
       navigate('/auth/login');
       return
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     getDataRooms()
 
   }, [navigate, userLogued]);
