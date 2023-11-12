@@ -1,6 +1,6 @@
 import { message } from 'antd';
 import { NoticeType } from 'antd/es/message/interface';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import GeneralLayout from '../components/common/Layout/GeneralLayout';
 import RoomsTable from '../components/rooms/RoomsTable';
@@ -26,9 +26,9 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ userLogued }) => {
   const navigate = useNavigate();
   const [dataHotels, setDataHotels] = useState<DataType[]>([])
   const [dataRooms, setDataRooms] = useState<Rooms[]>([])
-  const [detailRoom, setDetailRoom] = useState(null)
+  const [detailRoom] = useState(null)
 
-  const getDataRooms = async () => {
+  const getDataRooms =  useCallback(async () => {
     try {
       const hotels = await getHotels();
       const newDataWithKeys = hotels.map((item: DataType, index: number) => {
@@ -55,7 +55,7 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ userLogued }) => {
         notificationAction(error.message)
       }
     }
-  }
+  }, []);
 
   const changeStatusRoom = async (hotel_id: number, room_id: number, status: boolean) => {
     try {
@@ -139,7 +139,7 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ userLogued }) => {
     }
     getDataRooms()
 
-  }, [navigate, userLogued, getDataRooms]);
+  }, [navigate, userLogued]);
 
 
   // Render the component content based on the user's login status

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import GeneralLayout from '../components/common/Layout/GeneralLayout';
 import HotelTable from '../components/hotels/HotelTable';
@@ -26,7 +26,7 @@ const HotelsPage: React.FC<HotelsPageProps> = ({ userLogued }) => {
     });
   };
 
-  const getDataHotels = async () => {
+  const getDataHotels = useCallback(async () => {
     try {
       const hotels = await getHotels();
       const newDataWithKeys = hotels.map((item: DataType, index: number) => ({ ...item, key: index + 1 }));
@@ -38,7 +38,7 @@ const HotelsPage: React.FC<HotelsPageProps> = ({ userLogued }) => {
         notificationAction(error.message)
       }
     }
-  }
+  }, []);
 
   const changeStatusHotel = async (id: number, status: boolean) => {
     try {
