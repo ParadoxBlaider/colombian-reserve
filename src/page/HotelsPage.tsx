@@ -26,7 +26,7 @@ const HotelsPage: React.FC<HotelsPageProps> = ({ userLogued }) => {
     });
   };
 
-  const getDataHotels = useCallback(async () => {
+  const getDataHotels = async() => {
     try {
       const hotels = await getHotels();
       const newDataWithKeys = hotels.map((item: DataType, index: number) => ({ ...item, key: index + 1 }));
@@ -38,7 +38,7 @@ const HotelsPage: React.FC<HotelsPageProps> = ({ userLogued }) => {
         notificationAction(error.message)
       }
     }
-  }, []);
+  }
 
   const changeStatusHotel = async (id: number, status: boolean) => {
     try {
