@@ -28,7 +28,7 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ userLogued }) => {
   const [dataRooms, setDataRooms] = useState<Rooms[]>([])
   const [detailRoom] = useState(null)
 
-  const getDataRooms =  useCallback(async () => {
+  const getDataRooms =  async() => {
     try {
       const hotels = await getHotels();
       const newDataWithKeys = hotels.map((item: DataType, index: number) => {
@@ -55,7 +55,7 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ userLogued }) => {
         notificationAction(error.message)
       }
     }
-  }, []);
+  }
 
   const changeStatusRoom = async (hotel_id: number, room_id: number, status: boolean) => {
     try {
