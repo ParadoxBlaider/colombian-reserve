@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import GeneralLayout from '../components/common/Layout/GeneralLayout';
 
-
 interface BookingsPageProps {
   userLogued: boolean;
 }
