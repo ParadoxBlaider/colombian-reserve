@@ -1,7 +1,6 @@
 import { Form, Input, Checkbox, Button } from "antd"
 import { ValidateErrorEntity } from "rc-field-form/lib/interface";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { login } from "../../services/auth/api";
 import '../../styles/login/index.css'
 
@@ -12,11 +11,10 @@ type credentials = {
 
 const FormLogin: React.FC = () => {
   const [error, setError] = useState('');
-  const navigate = useNavigate();
 
-  const onFinish = async({username, password}: credentials) => {
+  const onFinish = async ({ username, password }: credentials) => {
     try {
-      const user = await login({username,password });
+      const user = await login({ username, password });
       console.log(user)
       setError('')
       /* navigate('/'); */
@@ -44,7 +42,7 @@ const FormLogin: React.FC = () => {
         label="Username"
         name="username"
         rules={[{ required: true, message: 'Please input your username!' }]}
-    >
+      >
         <Input />
       </Form.Item>
 
@@ -52,17 +50,17 @@ const FormLogin: React.FC = () => {
         label="Password"
         name="password"
         rules={[{ required: true, message: 'Please input your password!' }]}
-    >
+      >
         <Input.Password />
       </Form.Item>
 
       <Form.Item
         name="remember"
         valuePropName="checked"
-    >
+      >
         <Checkbox>Remember me</Checkbox>
       </Form.Item>
-      
+
       <Form.Item>
         <Button type="primary" htmlType="submit" className="general-action-btn">
           Submit

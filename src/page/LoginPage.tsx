@@ -1,4 +1,3 @@
-import React from 'react';
 import FormLogin from '../components/login/FormLogin';
 import '../styles/login/index.css'
 

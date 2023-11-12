@@ -1,7 +1,10 @@
 // src/api.js
 import axios from 'axios';
 
-const BASE_URL = 'https://my-json-server.typicode.com/ParadoxBlaider/colombian-reserve-server/api';
+//prod
+const BASE_URL = 'https://colombian-reserve-server.azurewebsites.net/api';
+//dev
+/* const BASE_URL = 'http://localhost:4000/api'; */
 
 export const login = async (credentials) => {
   try {
