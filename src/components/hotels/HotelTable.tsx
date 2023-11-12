@@ -78,7 +78,7 @@ const HotelTable: React.FC<HotelTableProps> = ({ dataHotels, changeStatusHotel, 
       title: 'Nombre',
       dataIndex: 'name',
       key: 'name',
-      render: (text) => <a>{text}</a>,
+      render: (text) => <span>{text}</span>,
     },
     {
       title: 'Ciudad',

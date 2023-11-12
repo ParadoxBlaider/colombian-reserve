@@ -12,6 +12,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import LogoCompany from '../../../assets/images/login/logo.png'
 import './GeneralLayout.css'
 import Footer from '../Footer';
+import { useMemo } from 'react';
 
 const { Header, Sider, Content } = Layout;
 
@@ -28,7 +29,7 @@ interface MenuItem {
 }
 
 const GeneralLayout: React.FC<GeneralLayoutProps> = ({ children }) => {
-  const menuItems: MenuItem[] = [
+  const menuItems: MenuItem[] = useMemo(() => [
     {
       key: 'hotels',
       icon: <UserOutlined />,
@@ -47,7 +48,7 @@ const GeneralLayout: React.FC<GeneralLayoutProps> = ({ children }) => {
       label: 'Reservas',
       title: 'Reservas',
     },
-  ];
+  ], []);
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const [pageTitle, setPageTitle] = useState<string>('');
   const navigation = useNavigate();
