@@ -11,6 +11,7 @@ import {
   CloseOutlined,
   PlusOutlined
 } from '@ant-design/icons';
+import ConfirmationModal from '../common/ConfirmationModal';
 
 
 
@@ -18,18 +19,29 @@ interface HotelTableProps {
   dataHotels: DataType[];
   changeStatusHotel: (id: number, status: boolean) => void;
   createNewHotel: (values: any) => void;
-  getDetailsHotel: (id: number)=>void;
-  cleanDataDetails: ()=>void;
+  getDetailsHotel: (id: number) => void;
+  cleanDataDetails: () => void;
   detailHotel: DataType | null;
-  updateDataHotel: (id:number, values: any) => void;
+  updateDataHotel: (id: number, values: any) => void;
+  deleteDataHotel: (id:number)=>void
 }
 
-
-const HotelTable: React.FC<HotelTableProps> = ({ dataHotels, changeStatusHotel, createNewHotel, getDetailsHotel, cleanDataDetails, detailHotel, updateDataHotel }) => {
+const HotelTable: React.FC<HotelTableProps> = (
+  {
+    dataHotels,
+    changeStatusHotel,
+    createNewHotel,
+    getDetailsHotel,
+    cleanDataDetails,
+    detailHotel,
+    updateDataHotel,
+    deleteDataHotel
+  }) => {
   const [modalHotel, setModalHotel] = useState<boolean>(false)
   const [modalRooms, setModalRooms] = useState<boolean>(false)
   const [idHotel, setIdHotel] = useState<number | null>(null)
   const [formHotel] = Form.useForm();
+  const [modalConfirm, setModalConfirm] = useState<boolean>(false)
 
   const options: SelectProps['options'] = [
     {
@@ -61,6 +73,23 @@ const HotelTable: React.FC<HotelTableProps> = ({ dataHotels, changeStatusHotel, 
     setModalHotel(true)
   }
 
+  const openModalConfirm = (id: number) => {
+    setIdHotel(id)
+    setModalConfirm(true)
+  }
+
+  const onConfirm = () => {
+    if(idHotel){
+      deleteDataHotel(idHotel)
+      setModalConfirm(false)
+    }
+  }
+
+  const onCancel = () => {
+    setIdHotel(null)
+    setModalConfirm(false)
+  }
+
   const openModalAssignRooms = (id: number) => {
     setModalRooms(true)
   }
@@ -77,22 +106,26 @@ const HotelTable: React.FC<HotelTableProps> = ({ dataHotels, changeStatusHotel, 
     {
       title: 'Nombre',
       dataIndex: 'name',
+      width: 300,
       key: 'name',
       render: (text) => <span>{text}</span>,
     },
     {
       title: 'Ciudad',
       dataIndex: 'city',
+      width: 200,
       key: 'city',
     },
     {
       title: 'Dirección',
       dataIndex: 'address',
+      width: 200,
       key: 'address',
     },
     {
       title: 'Habitaciones',
       dataIndex: 'rooms',
+      width: 300,
       key: 'rooms',
       render: (_, { rooms }) => (
         <>
@@ -108,7 +141,7 @@ const HotelTable: React.FC<HotelTableProps> = ({ dataHotels, changeStatusHotel, 
       )
     },
     {
-      title: 'Actions',
+      title: 'Acciones',
       key: 'status',
       className: '!text-center',
       render: (_, { status }) => {
@@ -125,8 +158,9 @@ const HotelTable: React.FC<HotelTableProps> = ({ dataHotels, changeStatusHotel, 
         }
         return (
           <div className='gap-3 flex justify-center'>
-            <Button className='bg-blue-900 !text-white' onClick={()=>openModalHotelWithDetail(_.id)}>Editar</Button>
+            <Button className='bg-blue-900 !text-white' onClick={() => openModalHotelWithDetail(_.id)}>Editar</Button>
             {btn_action}
+            <Button className='bg-red-600 !text-white' onClick={() => openModalConfirm(_.id)}>Eliminar</Button>
           </div>
         )
       }
@@ -138,9 +172,9 @@ const HotelTable: React.FC<HotelTableProps> = ({ dataHotels, changeStatusHotel, 
   };
 
   const onFinish = (values: any) => {
-    if(idHotel){
+    if (idHotel) {
       updateDataHotel(idHotel, values)
-    }else{
+    } else {
       createNewHotel(values)
       formHotel.resetFields()
     }
@@ -152,7 +186,7 @@ const HotelTable: React.FC<HotelTableProps> = ({ dataHotels, changeStatusHotel, 
   };
 
   useEffect(() => {
-    if(detailHotel){
+    if (detailHotel) {
       console.log(detailHotel)
       formHotel.setFieldsValue({
         name: detailHotel.name,
@@ -170,9 +204,9 @@ const HotelTable: React.FC<HotelTableProps> = ({ dataHotels, changeStatusHotel, 
         <div className='flex-1'></div>
         <Button className='bg-smart-talent !text-white' onClick={openModalHotel}>Crear Hotel</Button>
       </div>
-      <Table columns={columns} dataSource={dataHotels} />
+      <Table className='general_table' columns={columns} dataSource={dataHotels} />
 
-      <Modal className='modal-hotel' footer={null} title={`${idHotel ? 'Actualizar': 'Crear nuevo'} hotel`} open={modalHotel} okText={'Guardar cambios'} centered /* onOk={handleOk} */ onCancel={handleCancelModalHotel}>
+      <Modal className='modal-hotel' footer={null} title={`${idHotel ? 'Actualizar' : 'Crear nuevo'} hotel`} open={modalHotel} okText={'Guardar cambios'} centered /* onOk={handleOk} */ onCancel={handleCancelModalHotel}>
         <Form
           form={formHotel}
           name="basic"
@@ -237,6 +271,8 @@ const HotelTable: React.FC<HotelTableProps> = ({ dataHotels, changeStatusHotel, 
           />
         </Space>
       </Modal>
+
+      <ConfirmationModal visible={modalConfirm} onConfirm={onConfirm} onCancel={onCancel} />
     </div>
 
   )

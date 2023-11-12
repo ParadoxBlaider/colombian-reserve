@@ -1,10 +1,7 @@
 // src/api.js
 import axios from 'axios';
 
-//prod
-const BASE_URL = 'https://colombian-reserve-server.azurewebsites.net/api';
-//dev
-/* const BASE_URL = 'http://localhost:4000/api'; */
+const BASE_URL = process.env.REACT_APP_BASE_URL_API;
 
 export const getHotels = async () => {
   try {
@@ -45,6 +42,15 @@ export const detailsHotel = async (id) => {
 export const updateHotel = async (id, data) => {
   try {
     const response = await axios.patch(`${BASE_URL}/hotels/${id}`, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteHotel = async (id) => {
+  try {
+    const response = await axios.delete(`${BASE_URL}/hotels/${id}`);
     return response.data;
   } catch (error) {
     throw error;

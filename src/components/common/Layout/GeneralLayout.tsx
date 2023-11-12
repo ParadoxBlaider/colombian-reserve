@@ -3,10 +3,10 @@ import { Layout, Menu, Button } from 'antd';
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-  LogoutOutlined
+  LogoutOutlined,
+  GlobalOutlined,
+  TagOutlined,
+  ScheduleOutlined
 } from '@ant-design/icons';
 import { useLocation, useNavigate } from 'react-router-dom';
 import LogoCompany from '../../../assets/images/login/logo.png'
@@ -32,19 +32,19 @@ const GeneralLayout: React.FC<GeneralLayoutProps> = ({ children }) => {
   const menuItems: MenuItem[] = useMemo(() => [
     {
       key: 'hotels',
-      icon: <UserOutlined />,
+      icon: <GlobalOutlined />,
       label: 'Hoteles',
       title: 'Hoteles',
     },
     {
       key: 'rooms',
-      icon: <VideoCameraOutlined />,
+      icon: <TagOutlined />,
       label: 'Habitaciones',
       title: 'Habitaciones',
     },
     {
       key: 'bookings',
-      icon: <UploadOutlined />,
+      icon: <ScheduleOutlined />,
       label: 'Reservas',
       title: 'Reservas',
     },
@@ -103,6 +103,7 @@ const GeneralLayout: React.FC<GeneralLayoutProps> = ({ children }) => {
           <div className='w-[50px]'>
 
             <Button
+              title='Cerrar sesión'
               type="text"
               icon={<LogoutOutlined className='text-white center' />}
               onClick={onLogout}
