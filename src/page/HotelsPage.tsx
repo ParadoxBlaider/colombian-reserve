@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import GeneralLayout from '../components/common/Layout/GeneralLayout';
 import HotelTable from '../components/hotels/HotelTable';
@@ -127,9 +127,7 @@ const HotelsPage: React.FC<HotelsPageProps> = ({ userLogued }) => {
       return
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-
     getDataHotels()
-
   }, [navigate, userLogued]);
 
   // Render the component content based on the user's login status

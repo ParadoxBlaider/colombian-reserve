@@ -139,7 +139,6 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ userLogued }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     getDataRooms()
-
   }, [navigate, userLogued]);
 
 
