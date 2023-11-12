@@ -111,6 +111,7 @@ const GeneralLayout: React.FC<GeneralLayoutProps> = ({ children }) => {
           </div>
         </Header>
         <Content
+          className='overflow-auto'
           style={{
             margin: '24px 16px',
             padding: 24,
