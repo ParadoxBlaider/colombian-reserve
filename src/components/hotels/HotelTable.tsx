@@ -162,8 +162,7 @@ const HotelTable: React.FC<HotelTableProps> = ({ dataHotels, changeStatusHotel, 
     }
     return () => {
     }
-  }, [detailHotel])
-  
+  }, [detailHotel, formHotel])
 
   return (
     <div>
