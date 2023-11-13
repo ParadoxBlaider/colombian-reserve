@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
-import { Button, Form, Input, Modal, Select, Space, Table, Tag } from 'antd';
+import { Button, Form, Input, Modal, Select, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import '../../styles/hotel/index.css'
-import { DataType } from '../../services/hotel/types';
+import { DataType, Rooms } from '../../services/hotel/types';
 import { useState } from 'react';
-import type { SelectProps } from 'antd';
 
 import {
   CheckOutlined,
@@ -23,7 +22,8 @@ interface HotelTableProps {
   cleanDataDetails: () => void;
   detailHotel: DataType | null;
   updateDataHotel: (id: number, values: any) => void;
-  deleteDataHotel: (id:number)=>void
+  updateDataHotelRooms: (id: number, values: any) => void;
+  deleteDataHotel: (id: number) => void
 }
 
 const HotelTable: React.FC<HotelTableProps> = (
@@ -35,32 +35,17 @@ const HotelTable: React.FC<HotelTableProps> = (
     cleanDataDetails,
     detailHotel,
     updateDataHotel,
-    deleteDataHotel
+    deleteDataHotel,
+    updateDataHotelRooms
   }) => {
   const [modalHotel, setModalHotel] = useState<boolean>(false)
   const [modalRooms, setModalRooms] = useState<boolean>(false)
   const [idHotel, setIdHotel] = useState<number | null>(null)
   const [formHotel] = Form.useForm();
+  const [formRoomsHotel] = Form.useForm();
   const [modalConfirm, setModalConfirm] = useState<boolean>(false)
+  const [roomsDeleted, setRoomsDeleted] = useState<string[]>([])
 
-  const options: SelectProps['options'] = [
-    {
-      label: '101',
-      value: 1,
-    },
-    {
-      label: '102',
-      value: 2,
-    },
-    {
-      label: '103',
-      value: 3,
-    },
-    {
-      label: '104',
-      value: 4,
-    },
-  ];
 
   const openModalHotel = () => {
     setModalHotel(true)
@@ -72,28 +57,35 @@ const HotelTable: React.FC<HotelTableProps> = (
     setIdHotel(id)
     setModalHotel(true)
   }
-
   const openModalConfirm = (id: number) => {
     setIdHotel(id)
     setModalConfirm(true)
   }
-
   const onConfirm = () => {
-    if(idHotel){
+    if (idHotel) {
       deleteDataHotel(idHotel)
       setModalConfirm(false)
     }
   }
-
   const onCancel = () => {
     setIdHotel(null)
     setModalConfirm(false)
   }
-
-  const openModalAssignRooms = (id: number) => {
+  const openModalAssignRooms = (id: number, rooms: Rooms[]) => {
+    setIdHotel(id)
+    getDetailsHotel(id)
+    if (rooms.length > 0) {
+      const rooms_filtered = rooms.filter((room) => room.status)
+      const ids: number[] = rooms_filtered.map(room => room.id);
+      formRoomsHotel.setFieldsValue({
+        rooms: ids
+      })
+    }
+    else {
+      formRoomsHotel.resetFields()
+    }
     setModalRooms(true)
   }
-
   const handleCancelModalHotel = () => {
     setModalHotel(false)
     cleanDataDetails()
@@ -101,42 +93,43 @@ const HotelTable: React.FC<HotelTableProps> = (
   const handleCancelModalRooms = () => {
     setModalRooms(false)
   }
-
   const columns: ColumnsType<DataType> = [
     {
       title: 'Nombre',
-      dataIndex: 'name',
       width: 300,
+      dataIndex: 'name',
       key: 'name',
       render: (text) => <span>{text}</span>,
     },
     {
       title: 'Ciudad',
-      dataIndex: 'city',
       width: 200,
+      dataIndex: 'city',
       key: 'city',
     },
     {
       title: 'Dirección',
-      dataIndex: 'address',
       width: 200,
+      dataIndex: 'address',
       key: 'address',
     },
     {
       title: 'Habitaciones',
-      dataIndex: 'rooms',
       width: 300,
       key: 'rooms',
       render: (_, { rooms }) => (
         <>
           {rooms.map((room, index) => {
             return (
-              <Tag key={index}>
-                {room.number}
-              </Tag>
+              room.status ?
+                <Tag key={index}>
+                  {room.number}
+                </Tag>
+                :
+                null
             );
           })}
-          <Button className='p-0 !w-[22px] h-[22px]' onClick={() => openModalAssignRooms(_.id)} icon={<PlusOutlined className='w-[10px] text-black' />} />
+          <Button className='p-0 !w-[22px] h-[22px]' onClick={() => openModalAssignRooms(_.id, _.rooms)} icon={<PlusOutlined className='w-[10px] text-black' />} />
         </>
       )
     },
@@ -166,12 +159,13 @@ const HotelTable: React.FC<HotelTableProps> = (
       }
     },
   ];
-
   const handleChange = (value: string[]) => {
     console.log(`selected ${value}`);
   };
-
-  const onFinish = (values: any) => {
+  const handleDeselect = (value: string) => {
+    setRoomsDeleted([...roomsDeleted, value])
+  };
+  const onFinishFormHotel = (values: any) => {
     if (idHotel) {
       updateDataHotel(idHotel, values)
     } else {
@@ -180,14 +174,20 @@ const HotelTable: React.FC<HotelTableProps> = (
     }
     handleCancelModalHotel()
   };
-
+  const onFinishFormRooms = (values: any) => {
+    if (idHotel) {
+      values.rooms_deleted = roomsDeleted
+      updateDataHotelRooms(idHotel, values)
+    }
+    setRoomsDeleted([])
+    handleCancelModalRooms()
+  };
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
 
   useEffect(() => {
     if (detailHotel) {
-      console.log(detailHotel)
       formHotel.setFieldsValue({
         name: detailHotel.name,
         city: detailHotel.city,
@@ -197,6 +197,7 @@ const HotelTable: React.FC<HotelTableProps> = (
     return () => {
     }
   }, [detailHotel, formHotel])
+
 
   return (
     <div>
@@ -213,7 +214,7 @@ const HotelTable: React.FC<HotelTableProps> = (
           layout="vertical"
           className='modal-hotel__form'
           initialValues={{ remember: true }}
-          onFinish={onFinish}
+          onFinish={onFinishFormHotel}
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
@@ -233,7 +234,7 @@ const HotelTable: React.FC<HotelTableProps> = (
               rules={[{ required: true, message: 'Porfavor registra la ciudad' }]}
             >
               <Select
-                onChange={handleChange}
+                /*  onChange={handleChange} */
                 options={[
                   { value: 'Bogotá', label: 'Bogotá' },
                   { value: 'Medellín', label: 'Medellín' },
@@ -258,18 +259,43 @@ const HotelTable: React.FC<HotelTableProps> = (
         </Form>
       </Modal>
 
-      <Modal className='modal-hotel-rooms' okButtonProps={{ className: 'modal-hotel__main_action' }} title="Habitaciones" open={modalRooms} okText={'Guardar cambios'} centered /* onOk={handleOk} */ onCancel={handleCancelModalRooms}>
-        <Space style={{ width: '100%' }} direction="vertical">
-          <Select
-            mode="multiple"
-            allowClear
-            style={{ width: '100%' }}
-            placeholder="Porfavor seleccione las habitaciones"
-            /* defaultValue={} */
-            onChange={handleChange}
-            options={options}
-          />
-        </Space>
+      <Modal className='modal-hotel-rooms' footer={false} title="Habitaciones" open={modalRooms} centered /* onOk={handleOk} */ onCancel={handleCancelModalRooms}>
+        <Form
+          form={formRoomsHotel}
+          name="hotel_rooms"
+          layout="vertical"
+          className='modal-hotel__form'
+          initialValues={{ remember: true }}
+          onFinish={onFinishFormRooms}
+          /* onFinishFailed={onFinishFailed} */
+          autoComplete="off"
+        >
+          <Form.Item
+            label="Habitaciones"
+            name="rooms"
+            className='mb-4'
+          >
+            <Select
+              mode="multiple"
+              allowClear
+              placeholder="Porfavor seleccione las habitaciones"
+              onChange={handleChange}
+              onDeselect={handleDeselect}
+            >
+              {
+                detailHotel?.available_rooms.map((rooms, index) => (
+                  rooms.status && (
+                    <Select.Option key={index} value={rooms.id}>{rooms.number}</Select.Option>
+                  )
+                ))
+              }
+            </Select>
+          </Form.Item>
+          <div className='ant-modal-footer'>
+            <Button htmlType="button" className="ant-btn-default !text-black" onClick={handleCancelModalRooms}>Cancelar</Button>
+            <Button htmlType="submit" className="ant-btn-primary modal-hotel__main_action">Guardar cambios</Button>
+          </div>
+        </Form>
       </Modal>
 
       <ConfirmationModal visible={modalConfirm} onConfirm={onConfirm} onCancel={onCancel} />

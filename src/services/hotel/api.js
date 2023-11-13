@@ -1,7 +1,8 @@
 // src/api.js
 import axios from 'axios';
+import { URL_API } from '../../constants/env';
 
-const BASE_URL = "https://colombian-reserve-server.azurewebsites.net/api";
+const BASE_URL = URL_API;
 
 export const getHotels = async () => {
   try {
@@ -47,6 +48,16 @@ export const updateHotel = async (id, data) => {
     throw error;
   }
 };
+
+export const updateHotelRooms = async (id, data) => {
+  try {
+    const response = await axios.patch(`${BASE_URL}/hotels/${id}/rooms`, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 
 export const deleteHotel = async (id) => {
   try {

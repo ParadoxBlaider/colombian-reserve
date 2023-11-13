@@ -19,10 +19,10 @@ interface HotelTableProps {
   dataHotels: DataType[];
   changeStatusRoom: (hotel_id: number, room_id: number, status: boolean) => void;
   createNewRoom: (values: any) => void;
-  getDetailsRoom: (id: number) => void;
+  getDetailsRoom: (hotel_id: number, room_id: number) => void;
   cleanDataDetails: () => void;
   detailRoom: any;
-  updateDataRoom: (id: number, values: any) => void;
+  updateDataRoom: (hotel_id: number, room_id: number, values: any) => void;
   deleteDataRoom: (hotel_id: number, room_id: number) => void
 }
 
@@ -47,12 +47,14 @@ const RoomsTable: React.FC<HotelTableProps> = (
 
   const openModalRoom = () => {
     setModalRoom(true)
+    setIdHotel(null)
     setIdRoom(null)
     formRoom.resetFields()
   }
   const openModalRoomWithDetail = (hote_id: number, room_id: number) => {
-    /* getDetailsRoom(id)
-    setIdRoom(id) */
+    getDetailsRoom(hote_id, room_id)
+    setIdHotel(hote_id)
+    setIdRoom(room_id)
     setModalRoom(true)
   }
 
@@ -133,7 +135,7 @@ const RoomsTable: React.FC<HotelTableProps> = (
       title: 'Acciones',
       key: 'status',
       className: '!text-center',
-      fixed: true,
+      fixed: 'right',
       render: (_, { status }) => {
         let btn_action: React.ReactNode = <></>
         switch (status) {
@@ -162,8 +164,8 @@ const RoomsTable: React.FC<HotelTableProps> = (
   };
 
   const onFinish = (values: any) => {
-    if (idRoom) {
-      updateDataRoom(idRoom, values)
+    if (idHotel && idRoom) {
+      updateDataRoom(idHotel, idRoom, values)
     } else {
       createNewRoom(values)
       formRoom.resetFields()
@@ -178,9 +180,13 @@ const RoomsTable: React.FC<HotelTableProps> = (
   useEffect(() => {
     if (detailRoom) {
       formRoom.setFieldsValue({
-        name: detailRoom.name,
-        city: detailRoom.city,
-        address: detailRoom.address
+        hotel_id: detailRoom.hotel.id,
+        number: detailRoom.number,
+        base_price: detailRoom.base_price,
+        location: detailRoom.location,
+        tax: detailRoom.tax,
+        type: detailRoom.type,
+        max_people: detailRoom.max_people,
       })
     }
     return () => {
@@ -213,6 +219,7 @@ const RoomsTable: React.FC<HotelTableProps> = (
             rules={[{ required: true, message: 'Porfavor elige un hotel' }]}
           >
             <Select
+            disabled={idRoom ? true : false}
               onChange={handleChange}
               placeholder='Selecciona un hotel'
             >
@@ -231,7 +238,7 @@ const RoomsTable: React.FC<HotelTableProps> = (
               className='mb-4'
               rules={[{ required: true, message: 'Porfavor registra un número de habitación' }]}
             >
-              <Input />
+              <InputNumber className='w-full' />
             </Form.Item>
             <Form.Item
               label="Precio base"

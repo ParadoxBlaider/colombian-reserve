@@ -6,7 +6,7 @@ import GeneralLayout from '../components/common/Layout/GeneralLayout';
 import RoomsTable from '../components/rooms/RoomsTable';
 import { getHotels } from '../services/hotel/api';
 import { DataType, Rooms } from '../services/hotel/types';
-import { createRoom, deleteRoom, setStatusRoom } from '../services/room/api';
+import { createRoom, deleteRoom, detailsRooms, setStatusRoom, updateDataHotelRoom } from '../services/room/api';
 
 
 interface RoomsPageProps {
@@ -26,7 +26,7 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ userLogued }) => {
   const navigate = useNavigate();
   const [dataHotels, setDataHotels] = useState<DataType[]>([])
   const [dataRooms, setDataRooms] = useState<Rooms[]>([])
-  const [detailRoom] = useState(null)
+  const [detailRoom, setDetailRoom] = useState(null)
 
   const getDataRooms =  async() => {
     try {
@@ -91,25 +91,36 @@ const RoomsPage: React.FC<RoomsPageProps> = ({ userLogued }) => {
     }
   }
 
-
-  const getDetailsRoom = async (id: number) => {
-    /* try {
-      const hotels = await detailsHotel(id);
-      setDetailHotel(hotels)
-    } catch (error) {
-      console.log(error)
-    } */
+  const getDetailsRoom = async (hotel_id: number, room_id: number) => {
+    try {
+      const room = await detailsRooms(hotel_id, room_id);
+      if (room) {
+        setDetailRoom(room.room)
+      }
+    } catch (error: any) {
+      if (error.response) {
+        notificationAction(error.response?.data.message)
+      } else {
+        notificationAction(error.message)
+      }
+    }
   }
 
-  const updateDataRoom = async (id: number, data: any) => {
-    /* try {
-      const hotels = await updateHotel(id, data);
-      if(hotels){
-        getDataHotels()
+  const updateDataRoom = async (hotel_id: number, room_id: number, data: any) => {
+    try {
+      delete data.hotel_id
+      const room = await updateDataHotelRoom(hotel_id, room_id, data);
+      if(room){
+        notificationAction(room.message, 'success')
+        getDataRooms()
       }
-    } catch (error) {
-      console.log(error)
-    } */
+    } catch (error: any) {
+      if (error.response) {
+        notificationAction(error.response?.data.message)
+      } else {
+        notificationAction(error.message)
+      }
+    }
   }
 
   const deleteDataRoom = async (hotel_id: number, room_id: number) => {

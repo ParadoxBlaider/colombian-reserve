@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import GeneralLayout from '../components/common/Layout/GeneralLayout';
 import HotelTable from '../components/hotels/HotelTable';
-import { createHotel, deleteHotel, detailsHotel, getHotels, setStatusHotel, updateHotel } from '../services/hotel/api';
+import { createHotel, deleteHotel, detailsHotel, getHotels, setStatusHotel, updateHotel, updateHotelRooms } from '../services/hotel/api';
 import { useState } from 'react';
 import { DataType } from '../services/hotel/types';
 import { NoticeType } from 'antd/es/message/interface';
@@ -101,6 +101,22 @@ const HotelsPage: React.FC<HotelsPageProps> = ({ userLogued }) => {
     }
   }
 
+  const updateDataHotelRooms = async (id: number, data: any) => {
+    try {
+      const hotels = await updateHotelRooms(id, data);
+      if(hotels){
+        notificationAction(hotels.message, 'success')
+        getDataHotels()
+      }
+    } catch (error: any) {
+      if (error.response) {
+        notificationAction(error.response?.data.message)
+      } else {
+        notificationAction(error.message)
+      }
+    }
+  }
+
   const deleteDataHotel = async (id: number) => {
     try {
       const hotels = await deleteHotel(id);
@@ -142,7 +158,9 @@ const HotelsPage: React.FC<HotelsPageProps> = ({ userLogued }) => {
           cleanDataDetails={cleanDataDetails}
           detailHotel={detailHotel}
           updateDataHotel={updateDataHotel}
+          updateDataHotelRooms={updateDataHotelRooms}
           deleteDataHotel={deleteDataHotel}
+
         />
       </div>
     </GeneralLayout>
