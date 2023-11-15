@@ -216,7 +216,7 @@ const RoomsTable: React.FC<HotelTableProps> = (
             label="Hotel"
             name="hotel_id"
             className='mb-4'
-            rules={[{ required: true, message: 'Porfavor elige un hotel' }]}
+            rules={[{ required: true, message: 'Por favor elige un hotel' }]}
           >
             <Select
             disabled={idRoom ? true : false}
@@ -236,7 +236,7 @@ const RoomsTable: React.FC<HotelTableProps> = (
               label="Número de habitación"
               name="number"
               className='mb-4'
-              rules={[{ required: true, message: 'Porfavor registra un número de habitación' }]}
+              rules={[{ required: true, message: 'Por favor registra un número de habitación' }]}
             >
               <InputNumber className='w-full' />
             </Form.Item>
@@ -244,7 +244,7 @@ const RoomsTable: React.FC<HotelTableProps> = (
               label="Precio base"
               name="base_price"
               className='mb-4'
-              rules={[{ required: true, message: 'Porfavor registra un precio base' }]}
+              rules={[{ required: true, message: 'Por favor registra un precio base' }]}
             >
               <InputNumber className='w-full' />
             </Form.Item>
@@ -252,7 +252,7 @@ const RoomsTable: React.FC<HotelTableProps> = (
               label="Ubicación"
               name="location"
               className='mb-4'
-              rules={[{ required: true, message: 'Porfavor registra una ubicación' }]}
+              rules={[{ required: true, message: 'Por favor registra una ubicación' }]}
             >
               <Input />
             </Form.Item>
@@ -260,7 +260,7 @@ const RoomsTable: React.FC<HotelTableProps> = (
               label="Tipo de habitación"
               name="type"
               className='mb-4'
-              rules={[{ required: true, message: 'Porfavor elige el tipo de habitación' }]}
+              rules={[{ required: true, message: 'Por favor elige el tipo de habitación' }]}
             >
               <Select
                 onChange={handleChange}
@@ -275,7 +275,7 @@ const RoomsTable: React.FC<HotelTableProps> = (
               label="Impuesto"
               name="tax"
               className='mb-4'
-              rules={[{ required: true, message: 'Porfavor registra un impuesto' }]}
+              rules={[{ required: true, message: 'Por favor registra un impuesto' }]}
             >
               <InputNumber className='w-full' />
             </Form.Item>
@@ -283,7 +283,7 @@ const RoomsTable: React.FC<HotelTableProps> = (
               label="Cantidad de personas"
               name="max_people"
               className='mb-4'
-              rules={[{ required: true, message: 'Porfavor registra la cantidad de personas que tendrá la habitación' }]}
+              rules={[{ required: true, message: 'Por favor registra la cantidad de personas que tendrá la habitación' }]}
             >
               <InputNumber className='w-full' />
             </Form.Item>
@@ -301,7 +301,7 @@ const RoomsTable: React.FC<HotelTableProps> = (
             mode="multiple"
             allowClear
             style={{ width: '100%' }}
-            placeholder="Porfavor seleccione las habitaciones"
+            placeholder="Por favor seleccione las habitaciones"
             onChange={handleChange}
             options={options}
           />

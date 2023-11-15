@@ -20,7 +20,7 @@ const FormLogin: React.FC = () => {
       /* navigate('/'); */
       window.location.href = `${window.location.origin}`
     } catch (error) {
-      setError('Invalid username or password');
+      setError('Usuario o contraseña invalidos');
     }
   };
   const onFinishFailed = (errorInfo: ValidateErrorEntity) => {
@@ -39,17 +39,17 @@ const FormLogin: React.FC = () => {
     >
       <div className="text-center text-red-500 font-bold">{error}</div>
       <Form.Item
-        label="Username"
+        label="Nombre de usuario"
         name="username"
-        rules={[{ required: true, message: 'Please input your username!' }]}
+        rules={[{ required: true, message: 'Por favor ingresa tu nombre de usuario' }]}
       >
         <Input />
       </Form.Item>
 
       <Form.Item
-        label="Password"
+        label="Contraseña"
         name="password"
-        rules={[{ required: true, message: 'Please input your password!' }]}
+        rules={[{ required: true, message: 'Por favor ingresa tu contraseña' }]}
       >
         <Input.Password />
       </Form.Item>
@@ -58,12 +58,12 @@ const FormLogin: React.FC = () => {
         name="remember"
         valuePropName="checked"
       >
-        <Checkbox>Remember me</Checkbox>
+        <Checkbox>Recuerdame</Checkbox>
       </Form.Item>
 
       <Form.Item>
         <Button type="primary" htmlType="submit" className="general-action-btn">
-          Submit
+          Iniciar sesión
         </Button>
       </Form.Item>
     </Form>

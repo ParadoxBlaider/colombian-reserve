@@ -11,6 +11,7 @@ import {
   PlusOutlined
 } from '@ant-design/icons';
 import ConfirmationModal from '../common/ConfirmationModal';
+import { Link } from 'react-router-dom';
 
 
 
@@ -222,7 +223,7 @@ const HotelTable: React.FC<HotelTableProps> = (
             label="Nombre"
             name="name"
             className='mb-4'
-            rules={[{ required: true, message: 'Porfavor registra un nombre de hotel' }]}
+            rules={[{ required: true, message: 'Por favor registra un nombre de hotel' }]}
           >
             <Input />
           </Form.Item>
@@ -231,7 +232,7 @@ const HotelTable: React.FC<HotelTableProps> = (
               label="Ciudad"
               name="city"
               className='mb-4'
-              rules={[{ required: true, message: 'Porfavor registra la ciudad' }]}
+              rules={[{ required: true, message: 'Por favor registra la ciudad' }]}
             >
               <Select
                 /*  onChange={handleChange} */
@@ -247,7 +248,7 @@ const HotelTable: React.FC<HotelTableProps> = (
               label="Dirección"
               name="address"
               className='mb-4'
-              rules={[{ required: true, message: 'Porfavor registra la dirección' }]}
+              rules={[{ required: true, message: 'Por favor registra la dirección' }]}
             >
               <Input />
             </Form.Item>
@@ -278,7 +279,7 @@ const HotelTable: React.FC<HotelTableProps> = (
             <Select
               mode="multiple"
               allowClear
-              placeholder="Porfavor seleccione las habitaciones"
+              placeholder="Por favor seleccione las habitaciones"
               onChange={handleChange}
               onDeselect={handleDeselect}
             >
@@ -291,6 +292,11 @@ const HotelTable: React.FC<HotelTableProps> = (
               }
             </Select>
           </Form.Item>
+          {
+            detailHotel?.available_rooms.length === 0 && (
+              <div className='text-red-500'>Recuerda crear por lo menos una habitación para este hotel <Link className='font-bold underline' to='/rooms'>aquí</Link></div>
+            )
+          }
           <div className='ant-modal-footer'>
             <Button htmlType="button" className="ant-btn-default !text-black" onClick={handleCancelModalRooms}>Cancelar</Button>
             <Button htmlType="submit" className="ant-btn-primary modal-hotel__main_action">Guardar cambios</Button>
