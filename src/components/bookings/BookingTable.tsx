@@ -45,7 +45,15 @@ const BookingTablePage: React.FC<BookingTableProps> = (
       width: 200,
       dataIndex: 'room',
       key: 'room',
-      render: (_, { room }) => <span>{room.number}</span>,
+      render: (_, { room }) => {
+        let room_number:string | number = 'La habitación fue borrada'
+        if(room && room.number){
+          room_number = room.number
+        }
+        return (
+          <span>{room_number}</span>
+        )
+      },
     },
     {
       title: 'Fecha de entrada',
