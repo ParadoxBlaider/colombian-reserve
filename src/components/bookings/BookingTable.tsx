@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Avatar, Button, Card, Modal, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import '../../styles/hotel/index.css'
@@ -62,8 +62,8 @@ const BookingTablePage: React.FC<BookingTableProps> = (
     {
       title: 'Cantidad de personas',
       width: 200,
-      dataIndex: 'quatity_people',
-      key: 'quatity_people',
+      dataIndex: 'quantity_people',
+      key: 'quantity_people',
     },
     {
       title: 'Acciones',
@@ -78,6 +78,13 @@ const BookingTablePage: React.FC<BookingTableProps> = (
       }
     },
   ];
+
+  useEffect(() => {
+    console.log(detailBooking)
+    return () => {
+    }
+  }, [detailBooking])
+
 
   return (
     <div>
@@ -103,8 +110,9 @@ const BookingTablePage: React.FC<BookingTableProps> = (
               <div>
                 <h2 className='font-bold mb-3'>Huéspedes</h2>
                 {
-                  detailBooking.guests.map((guest) => (
+                  detailBooking.guests.map((guest, index) => (
                     <Card
+                      key={index}
                       className='mb-2'
                     >
                       <Meta
@@ -115,7 +123,7 @@ const BookingTablePage: React.FC<BookingTableProps> = (
                             <p><span className='font-bold text-xs'>Correo:</span> {guest.email}</p>
                             <p><span className='font-bold text-xs'>Tipo de documento:</span> {guest.type_document}</p>
                             <p><span className='font-bold text-xs'>Número documento:</span> {guest.document_number}</p>
-                            <p><span className='font-bold text-xs'>Fecha de nacimiento:</span> {guest.birthdate}</p>
+                            <p><span className='font-bold text-xs'>Fecha de nacimiento:</span> {guest.birthday}</p>
                             <p><span className='font-bold text-xs'>Teléfono:</span> {guest.cellphone}</p>
                             <p><span className='font-bold text-xs'>Genero:</span> {guest.genre}</p>
                           </div>

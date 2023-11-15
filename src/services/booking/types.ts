@@ -17,7 +17,7 @@ export interface DataBookings {
 export interface Guests {
   name: string;
   last_name: string;
-  birthdate: string;
+  birthday: string;
   genre: string;
   type_document: string;
   document_number: string;

@@ -167,6 +167,7 @@ const RoomsTable: React.FC<HotelTableProps> = (
     if (idHotel && idRoom) {
       updateDataRoom(idHotel, idRoom, values)
     } else {
+      values.dates_reservations = []
       createNewRoom(values)
       formRoom.resetFields()
     }

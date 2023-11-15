@@ -25,4 +25,5 @@ export type Rooms = {
   tax: number;
   max_people: number;
   status: boolean;
+  dates_reservations:string[];
 }
